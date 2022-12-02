@@ -3,6 +3,7 @@ import cors from 'cors'
 import { getConnection } from './database/database.js'
 import { adminRouter } from './routes/admins.js'
 import { clientRouter } from './routes/clients.js'
+import { bookRouter } from './routes/books.js'
 
 const app = express()
 //listen
@@ -15,4 +16,4 @@ app.get('/', (req, res)=> res.json('SERVER RUNNING'))
 //database connect
 getConnection()
 //routes
-app.use('/', adminRouter, clientRouter)
+app.use('/', adminRouter, clientRouter, bookRouter)

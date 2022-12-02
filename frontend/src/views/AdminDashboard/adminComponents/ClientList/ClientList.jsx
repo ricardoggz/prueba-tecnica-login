@@ -1,19 +1,10 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useFetch } from '../../../hooks'
+import { Spinner } from '../../../../components'
 export const ClientList = ()=>{
-    const [clients, setClients] = useState([])
-    const [loading, setLoading] = useState(true)
-    useEffect(()=>{
-        (async()=>{
-            try {
-                const response = await axios.get(`http://localhost:8080/clients`)
-                setClients(response.data)
-                setLoading(false)
-            } catch (error) {
-                console.log(error)
-            }
-        })()
-    },[loading])
+    const {data, loading} = useFetch({
+        url: `http://localhost:8080/clients`
+    })
     return (
         <section className='container-fluid pb-5 pt-5'>
             <h2 className='text-center'>Lista de clientes</h2>
@@ -21,7 +12,7 @@ export const ClientList = ()=>{
                 !loading
                 ?
                 <table className="table border container mt-5">
-                <thead>
+                <thead className='table-info'>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
@@ -32,7 +23,7 @@ export const ClientList = ()=>{
                 </thead>
                 <tbody>
                     {
-                        clients.map((client, index)=>(                            
+                        data.map((client, index)=>(                            
                             <tr key={index}>
                                 <th scope="row">{client.CLIENTE_ID}</th>
                                 <td>{client.CLIENTE_NOMBRE}</td>
@@ -68,7 +59,7 @@ export const ClientList = ()=>{
                 </tbody>
                 </table>
                 :
-                <p>Cargando clientes...</p>
+                <Spinner />
             }
         </section>
     )

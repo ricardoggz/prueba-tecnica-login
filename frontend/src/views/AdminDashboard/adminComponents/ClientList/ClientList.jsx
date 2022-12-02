@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
 import { useFetch } from '../../../hooks'
-import { Spinner } from '../../../../components'
+import { Spinner, Modal } from '../../../../components'
 import { deleteClient } from '../../../../services'
 
 export const ClientList = ()=>{
@@ -19,7 +18,7 @@ export const ClientList = ()=>{
                     <th scope="col">Nombre</th>
                     <th scope="col">Usuario</th>
                     <th scope="col">Contraseña</th>
-                    <th scope='col'>Editar campos</th>
+                    <th scope='col'>Editar cliente</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,21 +30,24 @@ export const ClientList = ()=>{
                                 <td>{client.CLIENTE_USUARIO}</td>
                                 <td>{client.CLIENTE_CONTRASENA}</td>
                                 <td>
-                                    <button className='btn btn-primary'data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar campos</button>
+                                    <button className='btn btn-primary'data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar campos</button>        
                                     <button
                                     className='btn btn-danger'
                                     data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop"
-                                    onClick={()=> {
-                                        deleteClient({
-                                        user: client.CLIENTE_USUARIO,
-                                        password: client.CLIENTE_CONTRASENA
-                                        })
-                                        document.location.reload()
-                                    }}
+                                    data-bs-target="#deleteClient"        
                                     >
                                         Eliminar
                                     </button>
+                                    <Modal
+                                        onClick={()=>{deleteClient({
+                                            user: client.CLIENTE_USUARIO,
+                                            password: client.CLIENTE_CONTRASENA
+                                            })
+                                            setTimeout(()=> document.location.reload(), 500)}
+                                        }
+                                        title='¿Seguro que quieres eliminar este registro?'
+                                        id='deleteClient'
+                                    />
                                 </td>                                
                             </tr>
                         

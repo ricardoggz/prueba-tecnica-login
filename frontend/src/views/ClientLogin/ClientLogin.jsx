@@ -1,20 +1,19 @@
-import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { Form } from '../../components'
+import { useOnChange } from '../hooks'
+import { loginClient } from '../../services'
 
 export const ClientLogin = ()=>{
-    const [client, setClient]= useState('')
-    const onChange = (evt)=>{
-        setClient({
-            ...client,
-            [evt.target.name] : evt.target.value
-        })
-    }
+    const {onChange, user} = useOnChange()
     const onSubmit= (evt)=>{
         evt.preventDefault()
-        console.log(client)
+        loginClient({data: user})
         evt.target.reset()
+        return setTimeout(()=>document.location.reload(),500)
     }
     return (
+        !localStorage.getItem('client')
+        ?
         <section className='container-fluid pt-5 pb-5 bg-light'>
             <div className='container pt-5 pb-5'>
                 <h2 className='text-center pb-5'>Iniciar Sesión como Cliente</h2>
@@ -26,5 +25,7 @@ export const ClientLogin = ()=>{
                 />
             </div>
         </section>
+        :
+        <Navigate to='/client-dashboard' />
     )
 }

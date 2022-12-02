@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom'
 
 export const NavBar = ()=>{
     const admin = JSON.parse(localStorage.getItem('admin'))
-    return (
-        !admin 
+    const client = JSON.parse(localStorage.getItem('client'))
+    return(
+        !admin && !client
         ?
         <nav className="navbar navbar-expand-lg bg-dark">
             <div className="container">

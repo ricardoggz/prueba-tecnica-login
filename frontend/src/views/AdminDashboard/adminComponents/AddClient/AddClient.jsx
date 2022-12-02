@@ -11,7 +11,7 @@ export const AddClient = ()=>{
         return setTimeout(()=> document.location.reload(),500)
     }
     return (
-        <div className="container pt-5 pb-5">
+        <div className="container pb-5">
             <h3 className="text-center pb-5">Agregar cliente</h3>
             <form className="border p-3 bg-body" onSubmit={onSubmit}>
                 {formValues.map((value, index)=>(

@@ -8,3 +8,17 @@ export const addClient = async({data})=>{
         return error
     }
 }
+
+export const deleteClient = async({user, password})=>{
+    try {
+        const response = await axios.delete(`http://localhost:8080/delete-client`,{
+            data:{
+                CLIENTE_USUARIO: user,
+                CLIENTE_CONTRASENA: password 
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+}

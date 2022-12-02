@@ -1,6 +1,8 @@
-import axios from 'axios'
+import { useEffect } from 'react'
 import { useFetch } from '../../../hooks'
 import { Spinner } from '../../../../components'
+import { deleteClient } from '../../../../services'
+
 export const ClientList = ()=>{
     const {data, loading} = useFetch({
         url: `http://localhost:8080/clients`
@@ -8,8 +10,7 @@ export const ClientList = ()=>{
     return (
         <section className='container-fluid pb-5 pt-5'>
             <h2 className='text-center'>Lista de clientes</h2>
-            {
-                !loading
+            {!loading
                 ?
                 <table className="table border container mt-5">
                 <thead className='table-info'>
@@ -35,18 +36,12 @@ export const ClientList = ()=>{
                                     className='btn btn-danger'
                                     data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop"
-                                    onClick={async()=>{
-                                        try {
-                                            const response = await axios.delete(`http://localhost:8080/delete-client`,{
-                                                    data:{
-                                                        CLIENTE_USUARIO: client.CLIENTE_USUARIO,
-                                                        CLIENTE_CONTRASENA: client.CLIENTE_CONTRASENA
-                                                    }
-                                            })
-                                            document.location.reload()
-                                        } catch (error) {
-                                            console.log(error)
-                                        }                                    
+                                    onClick={()=> {
+                                        deleteClient({
+                                        user: client.CLIENTE_USUARIO,
+                                        password: client.CLIENTE_CONTRASENA
+                                        })
+                                        document.location.reload()
                                     }}
                                     >
                                         Eliminar
